@@ -7,31 +7,40 @@ class KivaAPI():
     """ Methods to parse Kiva API 
     """
 
-    def get_latest_loans(self):
-        """  Get latests loans
+    def get_loans_sample(self):
+        """  Get 1st page of loans
         """
-        url='http://api.kivaws.org/v1/loans/newest.json'
+        url = 'http://api.kivaws.org/v1/loans/newest.json'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        response_dict = response.json()
+        
+        return response_dict['loans']
 
-        loans = response.json()
-        return loans
+    def get_loans_all(self):
+        """  Get all loans
+        """
 
-        # json_obj = jsonFromURL(url)
-        # loans = json_obj.get('loans')
+        url = 'http://api.kivaws.org/v1/loans/newest.json'
+        response = requests.get(url)
+        if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        response_dict = response.json()
+        total_loans = response_dict['loans']
 
-        # paging = json_obj.get('paging')
-        # page = 1
-        # pages = int(paging.get('pages'))
-        # while page <= pages:
-        #     page=page+1
-        #     url=url+'&page='+str(page)
-        #     json_obj = jsonFromURL(url)
-        #     loans=loans+json_obj.get('loans')
+        paging = response_dict['paging']
+        page = 1
+        n_paging = paging["pages"]
+        while page <= n_paging:
+            page += 1
+            url = url+'&page='+str(page)
+            response = requests.get(url)
+            if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
 
-        # return loans      
+            response_dict = response.json()
+            total_loans += response_dict['loans']
 
-   
+        return total_loans      
+
     def get_team_list(self,lender_id):
         """ Return a list of teams a lender belongs to 
         """
@@ -70,21 +79,7 @@ class KivaAPI():
         every_id = every_id[:-1] #remove the final comma
         return every_id
 
-    def get_lender_invitee_sum(self, id_list):
-        """ Return the total number of invites extended by the list of lenders 
-        """
-        # Make a single GET request to retrieve a list of lender details
-        url = 'https://api.kivaws.org/v1/lenders/'+id_list+'.json'
-        response = requests.get(url)
-        if response.status_code != requests.codes.ok:  self.handle_error()
-        data = response.json()
 
-        # Go through each lender in the list and add up their invitations for a team total
-        lender_list = data['lenders']
-        team_impact = 0
-        for j in range(len(lender_list)):
-            team_impact += lender_list[j]['invitee_count']
-        return team_impact
 
     def handle_error(self, status):
         if status == 'org.kiva.RateLimitExceeded':
@@ -101,11 +96,11 @@ def main():
     
     current_country = 'foo'
     n_loans = 10
-    
+
     test = KivaAPI()
-    current_loans = test.get_latest_loans()
-    print("The lastest loan is from {0}.".format(current_loans['loans'][0]['location']['country']))
-   
+    current_loans = test.get_loans_sample()
+    print("The lastest loan is from {0}.".format(current_loans[0]['location']['country']))
+
     # lender_id = 'premal'
     # # Change 'premal' to your own lender id to see the impact of the teams you belong to
     # team_list = test.get_team_list(lender_id)
