@@ -1,0 +1,6 @@
+TODO: get all loans available from given country via direct API call
+TODO: convert (and validate) any country to 2 string country code
+
+## Ideas
+- suggest based on Kiva regioins
+- make suggestions based on last n visited country
