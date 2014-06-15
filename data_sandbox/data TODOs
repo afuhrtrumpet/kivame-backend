@@ -1,5 +1,6 @@
-TODO: get all loans available from given country via direct API call
+TODO: get 20 loans based on 'Urdu', u'Sindhi', u'Hindi', u'English'
 TODO: convert (and validate) any country to 2 string country code
+TODO: get api call for given lender id
 
 ## Ideas
 - suggest based on Kiva regioins

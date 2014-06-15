@@ -6,6 +6,33 @@ import requests
 class KivaAPI():
     """ Methods to parse Kiva API 
     """
+    def get_loan_by_id(self, id):
+        """  Get a single loan based on id
+        """
+        url = 'http://api.kivaws.org/v1/loans/search.json&id='+str(id)
+        response = requests.get(url)
+        if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        response_dict = response.json()
+
+        return response_dict['loans'][0]
+
+    def ids_from_loans(self, loans):
+         return [loan['id'] for loan in loans]
+
+    def get_loans_by_country(self, country_code):
+        """  Get loans based on country
+        """
+        if len(country_code) == 2:
+            url = 'http://api.kivaws.org/v1/loans/search.json&country_code='+country_code
+            response = requests.get(url)
+            if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+            response_dict = response.json()
+            loans = response_dict['loans'] # 1st page only / 20 loans
+           
+            return loans
+        else:
+            print('Invalid country code') 
+
 
     def get_loans_sample(self):
         """  Get 1st page of loans
@@ -15,7 +42,7 @@ class KivaAPI():
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
         
-        return response_dict['loans']
+        return response_dict['loans'] # 1st page only / 20 loans
 
     def get_loans_all(self):
         """  Get all loans
@@ -25,8 +52,10 @@ class KivaAPI():
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
-        total_loans = response_dict['loans']
+        total_loans = response_dict['loans'] # 1st page only / 20 loans
 
+        # Go through each page of API call
+        # XXX: Good chance of timing out
         paging = response_dict['paging']
         page = 1
         n_paging = paging["pages"]
@@ -79,8 +108,6 @@ class KivaAPI():
         every_id = every_id[:-1] #remove the final comma
         return every_id
 
-
-
     def handle_error(self, status):
         if status == 'org.kiva.RateLimitExceeded':
             print('Status: ', response.status_code, 'You are blocked due to overuse. Retry in a few minutes. Exiting.')
@@ -94,12 +121,10 @@ class KivaAPI():
 
 def main():
     
-    current_country = 'foo'
-    n_loans = 10
-
+    current_country = 'YE'
     test = KivaAPI()
-    current_loans = test.get_loans_sample()
-    print("The lastest loan is from {0}.".format(current_loans[0]['location']['country']))
+    loans = test.get_loans_by_country(current_country)
+    # print("The lastest loan is from {0}.".format(current_loans[0]['location']['country']))
 
     # lender_id = 'premal'
     # # Change 'premal' to your own lender id to see the impact of the teams you belong to
