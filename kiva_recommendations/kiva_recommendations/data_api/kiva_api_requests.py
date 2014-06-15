@@ -166,29 +166,37 @@ class KivaAPI():
         exit()
 
     def get_loans(self, facebook_access_token):
-        fi = FacebookIngest(facebook_access_token)
-        countries = fi.get_tagged_places()
 
-        # Get country and country code
-        countries = list(countries) # should be from facebook_ingest.py
-        country = random.choice(countries)
+        loans = []
 
-        #print("The current country is {0}.".format(country))
-        country_code = self.find_country_code(country)
+        try:
+            fi = FacebookIngest(facebook_access_token)
+            countries = fi.get_tagged_places()
 
-        # Get list of loan IDs for country
-        loans = self.get_loans_by_country(country_code)
+            # Get country and country code
+            countries = list(countries) # should be from facebook_ingest.py
+            country = random.choice(countries)
+
+            #print("The current country is {0}.".format(country))
+            country_code = self.find_country_code(country)
+
+            # Get list of loan IDs for country
+            loans = self.get_loans_by_country(country_code)
+
+        except:
+            pass
 
         # Make sure there is enough loans
         if len(loans) < 20:
             n_missing_loans = 20 - len(loans)
             more_loans = self.get_loans_sample()
-            filler_loans = more_loans[0:n_missing_loans]
+            filler_loans = more_loans[0 : n_missing_loans]
             #TODO: make sure we aren't showing the same loans twice
-            loans = loans+filler_loans
+            loans = loans + filler_loans
 
         loan_ids = self.get_ids_for_loans(loans)
-        loan_ids = random.shuffle(loan_ids)
+        random.shuffle(loan_ids)
+
         #print("The current loan ids are {0}.".format(loan_ids))
 
         return loan_ids

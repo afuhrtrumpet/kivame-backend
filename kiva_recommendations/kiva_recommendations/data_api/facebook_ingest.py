@@ -8,10 +8,15 @@ about_me_token = "CAACEdEose0cBACNbgZCsTIk0pwIxHa2UGYhKyrXZAxYfnkiUu8h96LmH1DqEL
 
 class FacebookIngest():
 
-    def __init__(self, oauth_access_token):
-        self.graph = graph = GraphAPI(oauth_access_token)
-        self.user_id = self.get_user_id()
-        self.geocoder = GoogleGeocoder()
+    def __init__(self, oauth_access_token=None):
+
+        if oauth_access_token == None:
+
+            self.graph = graph = GraphAPI(oauth_access_token)
+            self.user_id = self.get_user_id()
+            self.geocoder = GoogleGeocoder()
+        else:
+            raise Exception('No facebook access token provided.')
 
     def get_user_id(self):
         resp = self.graph.get('/v2.0/me?fields=id')
