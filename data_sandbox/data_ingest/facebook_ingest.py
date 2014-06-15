@@ -55,7 +55,7 @@ def main ():
     #print "User Id:", fi.user_id
     #print "Location of Residence:", fi.get_location_of_residence()
     #print "Languages:", fi.get_languages()
-    print "Tagged Places:", fi.get_tagged_places()
+    print "Tagged Places:", eval(fi.get_tagged_places())
 
 if __name__ == "__main__":
     main()
