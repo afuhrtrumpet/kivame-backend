@@ -36,7 +36,7 @@ class KivaAPI():
 
         response_dict = response.json()
 
-        #print response_dict['loans'][0]
+        print response_dict['loans'][0]
         #Pick up the necessary things
         loan['id'] = response_dict['loans'][0]['id']
         loan['image'] = response_dict['loans'][0]['name']
@@ -44,6 +44,13 @@ class KivaAPI():
         loan['country'] = response_dict['loans'][0]['location']['country']
         loan['country_code'] = response_dict['loans'][0]['location']['country_code']
         loan['use'] = response_dict['loans'][0]['use']
+
+        #Small description
+        #Long description
+        #Badges
+        #Loan percentage fullfilled
+        #Total Ask
+
 
         return loan
 
