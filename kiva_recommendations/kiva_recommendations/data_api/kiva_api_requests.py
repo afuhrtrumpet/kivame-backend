@@ -241,6 +241,9 @@ class KivaAPI():
                 self.logger.error("0")
 
                 fi = FacebookIngest(self.logger, facebook_access_token)
+
+                self.logger.error("0.5")
+
                 countries = fi.get_tagged_places()
 
                 self.logger.error("1")
