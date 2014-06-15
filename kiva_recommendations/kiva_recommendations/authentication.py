@@ -26,9 +26,18 @@ def kiva_request(request):
 
 @csrf_exempt
 def kiva_access(request):
-	verifier = request.POST.get('verifier')
-	oauth_token = request.POST.get('oauth_token')
-	oauth_token_secret = request.POST.get('oauth_token_secret')
+	verifier = ""
+	oauth_token = ""
+	oauth_token_secret = ""
+	try:
+		request_data = json.loads(request.body)
+		verifier = request_data['verifier']
+		oauth_token = request_data['oauth_token']
+		oauth_token_secret = request_data['oauth_token_secret']
+	except ValueError:
+		verifier = request.POST.get('verifier')
+		oauth_token = request.POST.get('oauth_token')
+		oauth_token_secret = request.POST.get('oauth_token_secret')
 
 	print(oauth_token)
 	print(oauth_token_secret)

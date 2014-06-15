@@ -5,8 +5,15 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def loan_list(request):
-	facebook_token = request.POST.get('token')
-	result_type = request.POST.get('type')
+	facebook_token = ""
+	result_type = ""
+	try:
+		request_data= json.loads(request.body)
+		facebook_token = request_data['token']
+		result_type = request_data['type']
+	except ValueError:
+		facebook_token = request.POST.get('token')
+		result_type = request.POST.get('type')
 
 	kapi = api.KivaAPI()
 	result = []
@@ -21,7 +28,13 @@ def loan_list(request):
 
 @csrf_exempt
 def all_loans(request):
-	facebook_token = request.POST.get('token')
+	facebook_token = ""
+	try:
+		request_data = json.loads(request.body)
+		facebook_token = request_data['token']
+	except ValueError:
+		facebook_token = request.POST.get('token')
+	print(facebook_token)
 	types = ['geography', 'expiring']
 	result = []
 	kapi = api.KivaAPI()
