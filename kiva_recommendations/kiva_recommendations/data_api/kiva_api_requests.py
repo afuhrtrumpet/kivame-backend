@@ -44,7 +44,13 @@ class KivaAPI():
         loan['borrower_name'] =  response_dict['loans'][0]['name']
         loan['country'] = response_dict['loans'][0]['location']['country']
         loan['country_code'] = response_dict['loans'][0]['location']['country_code']
-        loan['use'] = response_dict['loans'][0]['use']
+        loan['short_description'] = response_dict['loans'][0]['use']
+
+        try:
+            loan['long_description'] = response_dict['loans'][0]['description']['texts']['en']
+        except KeyError:
+            loan['long_description'] = ""
+
         loan['loan_amount'] = response_dict['loans'][0]['loan_amount']
         loan['funded_amount'] = response_dict['loans'][0]['funded_amount']
         loan['funded_percentage'] = (loan['funded_amount'] * 1.0 / loan['loan_amount']) * 100
