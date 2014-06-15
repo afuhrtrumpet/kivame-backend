@@ -23,15 +23,19 @@ def loan_list(request):
 def all_loans(request):
 	facebook_token = request.POST.get('token')
 	types = ['geography', 'expiring']
-	result = {}
+	result = []
 	kapi = api.KivaAPI()
 	for result_type in types:
-		result[result_type] = []
+		type_object = {}
+		type_object["name"] = [result_type]
 		loan_ids = kapi.get_loans(facebook_token, result_type)
+
+		type_object["loans"] = []
 		
 		for loan_id in loan_ids:
 			loan = kapi.get_loan_by_id(loan_id)
 			loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
 
-			result[result_type].append(loan)
+			type_object["loans"].append(loan)
+		result.append(type_object)
 	return HttpResponse(json.dumps(result))
