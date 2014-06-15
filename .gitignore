@@ -54,3 +54,6 @@ docs/_build/
 
 # Backup files
 *~
+
+# Development files
+.ipynb_checkpoints

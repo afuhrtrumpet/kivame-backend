@@ -4,10 +4,12 @@ __author__ = 'rakesh'
 
 from facepy import GraphAPI
 from reverse_geocode import ReverseGeoCode
+from datetime import datetime
+
 
 class FacebookIngest():
 
-    def __init__(self, oauth_access_token=None):
+    def __init__(self, logger_instance, oauth_access_token=None):
 
         if oauth_access_token != None:
             try:
@@ -20,6 +22,7 @@ class FacebookIngest():
 
         self.user_id = self.get_user_id()
         self.reverse_geocoder = ReverseGeoCode()
+        self.logger = logger_instance
 
     def get_user_id(self):
         resp = self.graph.get('/v2.0/me?fields=id')
@@ -57,5 +60,7 @@ class FacebookIngest():
 
             if country:
                 countries.add(country)
+
+            self.logger.error(str(datetime.now()) + ":" + "countries_returned: " + str(list(countries)))
 
         return list(countries)

@@ -13,6 +13,11 @@ import urllib2
 import json
 import time
 
+from factual import Factual
+
+FACTUAL_KEY = "8Oyh0iOezwTHc5tAUAANK9lYL1hprzkamtfEu4kR"
+FACTUAL_SECRET = "qezuK3PdoZGu6otRGbqy4hYc6QPMVAtqYqCj4CWg"
+
 
 class NominatimReverseGeocoder(object):
     def __init__(self, base_url = "http://open.mapquestapi.com/nominatim/v1/reverse?format=json"):
@@ -50,6 +55,7 @@ class ReverseGeoCode():
 
     def __init__(self):
         self.nrgc = NominatimReverseGeocoder()
+        self.factual = Factual(FACTUAL_KEY, FACTUAL_SECRET)
 
 
     def reverse_geocode_country_google(self, latitude, longitude):
@@ -85,7 +91,7 @@ class ReverseGeoCode():
 
     def reverse_geocode_country_nominatim(self, latitude, longitude):
 
-        country = ''
+        country = None
         reverse = None
 
         try:
@@ -96,28 +102,49 @@ class ReverseGeoCode():
         try:
             print reverse['address']['country']
             country = reverse['address']['country']
+
         except:
             raise Exception('Error post-processing the Nominatim reverse geocoded location into country')
 
         return country
 
-    def reverse_geocode_country(self, latitude, longitude):
 
-        country = ''
+    def reverse_geocode_country_factual(self, latitude, longitude):
+
+        latitude = float(latitude)
+        longitude = float(longitude)
+
+        country = None
+        query = None
 
         try:
-            country = self.reverse_geocode_country_google(latitude, longitude)
+            query = self.factual.geocode({'$point': [latitude, longitude]})
+            data = query.data()
+
+        except Exception,e:
+            print str(e)
+            raise Exception('Error reverse geo-coding the location via Factual')
+
+        try:
+            #print data
+            if len (data) > 0:
+                country = data[0]['country']
+
+        except Exception,e:
+            print str(e)
+            raise Exception('Error reverse geo-coding the location via Factual')
+
+        return country
+
+
+
+    def reverse_geocode_country(self, latitude, longitude):
+
+        country = None
+
+        try:
+            country = self.reverse_geocode_country_factual(latitude, longitude)
         except:
-
-            raise Exception('Google Reverse Coding failed')
-
-            try:
-                country = self.reverse_geocode_country_nominatim(latitude, longitude)
-            except:
-                raise Exception('Nominatim and Google Reverse Coding failed')
-
-
-
-
+            raise Exception('Factual Reverse Coding failed')
 
         return country

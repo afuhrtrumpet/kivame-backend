@@ -26,7 +26,8 @@ class KivaAPI():
     def find_country_code(self, country_name):
     
         # Custom name wrangling
-        if country_name == "USA": country_name = "United States"
+        if country_name == "USA" or country_name == "US":
+            country_name = "United States"
 
         #  Define country hash 
         countries = {}
@@ -55,8 +56,9 @@ class KivaAPI():
 
         #images and image id
         loan['image_id'] = response_dict['loans'][0]['image']["id"]
-        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+str(id)+'.jpg'
-        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+str(id)+'.jpg'
+        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+loan['image_id']+'.jpg'
+        loan['medium_image_url'] = 'http://www.kiva.org/img/w350/'+loan['image_id']+'.jpg'
+        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+loan['image_id']+'.jpg'
 
         loan['borrower_name'] =  response_dict['loans'][0]['name']
         loan['country'] = response_dict['loans'][0]['location']['country']
@@ -112,16 +114,20 @@ class KivaAPI():
     def get_loans_by_country(self, country_code):
         """  Get loans based on country
         """
+
+        loans = []
         if len(country_code) == 2:
             url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&country_code='+country_code+'&app_id=com.kivame'
             response = requests.get(url)
-            if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+            if response.status_code != requests.codes.ok:
+                self.handle_error(response.status_code)
+
             response_dict = response.json()
             loans = response_dict['loans'] # 1st page only / 20 loans
-           
-            return loans
         else:
-            print('Invalid country code') 
+            print('Invalid country code')
+
+        return loans
 
     def get_loans_sample(self):
         """  Get 1st page of loans
@@ -232,9 +238,8 @@ class KivaAPI():
         if type == "geography":
 
             try:
-                fi = FacebookIngest(facebook_access_token)
+                fi = FacebookIngest(self.logger, facebook_access_token)
                 countries = fi.get_tagged_places()
-
                 # Get country and country code
                 countries = list(countries) # should be from facebook_ingest.py
                 country = random.choice(countries)
@@ -276,7 +281,7 @@ class KivaAPI():
 def main():
 
     kapi = KivaAPI()
-    loan_ids = kapi.get_loans("CAACEdEose0cBACJn0tG9I2btjNBKgK1Kr9GZBojAg5ZAIdw9nfFXZBwFUnHhe38NT8WHZCVUqq2XLQBNvj0hZAHHF7x3zeeZAVixiPp1oSZCpd3BWjDFg9GUleA1wHFQWpGHGhTDTtYT4j9IJ3zzadRjHtMlcC1EXpKN7Wx6iW55wEYmnkis0FwfXoN4Hl6YvqOnzyWQ2qskgZDZD",
+    loan_ids = kapi.get_loans("CAACEdEose0cBAHPbzgjLduEmnOiEXwdvDesCHfb7GTHv5hQtLY9CKHiIqIzhvjdEZCXQ4i2qhdZAEemIJVmH3VUZAajOYnylBGcSQAyxPUmTZAS8L3eNRsSZCLwLBKlHU7N1Il96c4lcZBMaIVZAssIrRb21vd28kqoaSZAitG91N0JHdMtAH1llxvXLZCgyGXJN4pXGpDZCtgBAZDZD",
                               type = "geography")
 
     for loan_id in loan_ids:
