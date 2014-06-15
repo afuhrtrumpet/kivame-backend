@@ -1,3 +1,4 @@
+TODO: long story for loans
 
 ## Ideas
 - previous lender history
@@ -10,4 +11,5 @@ A list of business sectors for which to filter results.
 One of: Agriculture, Arts, Clothing, Construction, Education, Entertainment, Food, Health, Housing, Manufacturing, Personal Use, Retail, Services, Transportation, Wholesale
 
 - suggest based on Kiva regions
+
 - make suggestions based on last n visited country
