@@ -56,9 +56,9 @@ class KivaAPI():
 
         #images and image id
         loan['image_id'] = response_dict['loans'][0]['image']["id"]
-        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+str(id)+'.jpg'
-        loan['medium_image_url'] = 'http://www.kiva.org/img/w350/'+str(id)+'.jpg'
-        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+str(id)+'.jpg'
+        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+loan['image_id']+'.jpg'
+        loan['medium_image_url'] = 'http://www.kiva.org/img/w350/'+loan['image_id']+'.jpg'
+        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+loan['image_id']+'.jpg'
 
         loan['borrower_name'] =  response_dict['loans'][0]['name']
         loan['country'] = response_dict['loans'][0]['location']['country']
@@ -238,9 +238,8 @@ class KivaAPI():
         if type == "geography":
 
             try:
-                fi = FacebookIngest(facebook_access_token)
+                fi = FacebookIngest(self.logger, facebook_access_token)
                 countries = fi.get_tagged_places()
-
                 # Get country and country code
                 countries = list(countries) # should be from facebook_ingest.py
                 country = random.choice(countries)

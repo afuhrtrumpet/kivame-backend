@@ -1,33 +1,25 @@
-2014-06-15 12:25:29.005058:FacebookIngest failure - falling back.
-2014-06-15 12:25:29.005294:Factual and Google Reverse Coding failed
-2014-06-15 12:27:46.226646:FacebookIngest failure - falling back.
-2014-06-15 12:27:46.226813:Factual and Google Reverse Coding failed
-2014-06-15 12:28:24.808274:FacebookIngest failure - falling back.
-2014-06-15 12:28:24.808445:Factual and Google Reverse Coding failed
-2014-06-15 12:31:12.970590:FacebookIngest failure - falling back.
-2014-06-15 12:31:12.970839:list index out of range
-2014-06-15 12:31:55.698242:FacebookIngest failure - falling back.
-2014-06-15 12:31:55.698415:Factual and Google Reverse Coding failed
-2014-06-15 13:00:09.170250:FacebookIngest failure - falling back.
-2014-06-15 13:00:09.170396:[190] Error validating access token: Session has expired on Jun 15, 2014 1:00pm. The current time is Jun 15, 2014 1:00pm.
-2014-06-15 13:00:34.607647:FacebookIngest failure - falling back.
-2014-06-15 13:00:34.607787:[190] Error validating access token: Session has expired on Jun 15, 2014 1:00pm. The current time is Jun 15, 2014 1:00pm.
-2014-06-15 13:07:35.395344:FacebookIngest failure - falling back.
-2014-06-15 13:07:35.395489:[190] Error validating access token: Session has expired on Jun 15, 2014 1:00pm. The current time is Jun 15, 2014 1:07pm.
-2014-06-15 13:09:02.663746:FacebookIngest failure - falling back.
-2014-06-15 13:09:02.663914:Factual and Google Reverse Coding failed
-2014-06-15 13:09:03.849284:pad_loans failure.
-2014-06-15 13:09:10.470523:FacebookIngest failure - falling back.
-2014-06-15 13:09:10.470689:Factual and Google Reverse Coding failed
-2014-06-15 13:11:23.145692:FacebookIngest failure - falling back.
-2014-06-15 13:11:23.145856:Factual and Google Reverse Coding failed
-2014-06-15 13:11:45.480549:FacebookIngest failure - falling back.
-2014-06-15 13:11:45.480793:Factual and Google Reverse Coding failed
-2014-06-15 13:15:52.661476:FacebookIngest failure - falling back.
-2014-06-15 13:15:52.661656:Factual and Google Reverse Coding failed
-2014-06-15 13:22:54.360767:FacebookIngest failure - falling back.
-2014-06-15 13:22:54.360961:Factual and Google Reverse Coding failed
-2014-06-15 13:23:33.972431:FacebookIngest failure - falling back.
-2014-06-15 13:23:33.972573:Factual and Google Reverse Coding failed
-2014-06-15 13:26:40.118304:pad_loans failure.
-2014-06-15 13:27:45.046052:pad_loans failure.
+2014-06-15 14:01:50.743485:countries_returned: [u'US']
+2014-06-15 14:01:50.792409:countries_returned: [u'US']
+2014-06-15 14:01:50.863971:countries_returned: [u'US']
+2014-06-15 14:01:50.929596:countries_returned: [u'US']
+2014-06-15 14:01:50.975363:countries_returned: [u'US']
+2014-06-15 14:01:51.037532:countries_returned: [u'US']
+2014-06-15 14:01:51.127573:countries_returned: [u'US']
+2014-06-15 14:01:51.187466:countries_returned: [u'US']
+2014-06-15 14:01:51.226556:countries_returned: [u'US']
+2014-06-15 14:01:51.289067:countries_returned: [u'US']
+2014-06-15 14:01:51.345324:countries_returned: [u'US']
+2014-06-15 14:01:51.406512:countries_returned: [u'US']
+2014-06-15 14:01:51.466888:countries_returned: [u'US']
+2014-06-15 14:01:51.505883:countries_returned: [u'US']
+2014-06-15 14:01:51.561089:countries_returned: [u'US']
+2014-06-15 14:01:51.621028:countries_returned: [u'US']
+2014-06-15 14:01:51.680818:countries_returned: [u'US']
+2014-06-15 14:01:51.719778:countries_returned: [u'US']
+2014-06-15 14:01:51.921606:countries_returned: [u'US']
+2014-06-15 14:01:51.974978:countries_returned: [u'US']
+2014-06-15 14:01:52.018048:countries_returned: [u'US']
+2014-06-15 14:01:52.072373:countries_returned: [u'US']
+2014-06-15 14:01:52.127030:countries_returned: [u'US']
+2014-06-15 14:01:52.182054:countries_returned: [u'US']
+2014-06-15 14:01:52.224890:countries_returned: [u'US']

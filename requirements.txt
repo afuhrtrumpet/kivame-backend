@@ -4,3 +4,4 @@ pycountry
 python-googlegeocoder
 facepy
 geopy
+factual-api
