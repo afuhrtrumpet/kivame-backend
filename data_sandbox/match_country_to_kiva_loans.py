@@ -9,12 +9,24 @@ class KivaAPI():
     def get_loan_by_id(self, id):
         """  Get a single loan based on id
         """
+        loan = {}
         url = 'http://api.kivaws.org/v1/loans/search.json&id='+str(id)
         response = requests.get(url)
-        if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        if response.status_code != requests.codes.ok:
+            self.handle_error(response.status_code)
+
         response_dict = response.json()
 
-        return response_dict['loans'][0]
+        #print response_dict['loans'][0]
+        #Pick up the necessary things
+        loan['id'] = response_dict['loans'][0]['id']
+        loan['image'] = response_dict['loans'][0]['name']
+        loan['borrower_name'] =  response_dict['loans'][0]['name']
+        loan['country'] = response_dict['loans'][0]['location']['country']
+        loan['country_code'] = response_dict['loans'][0]['location']['country_code']
+        loan['use'] = response_dict['loans'][0]['use']
+
+        return loan
 
     def ids_from_loans(self, loans):
          return [loan['id'] for loan in loans]
@@ -124,6 +136,9 @@ def main():
     current_country = 'YE'
     test = KivaAPI()
     loans = test.get_loans_by_country(current_country)
+
+
+
     # print("The lastest loan is from {0}.".format(current_loans[0]['location']['country']))
 
     # lender_id = 'premal'
