@@ -90,7 +90,7 @@ class KivaAPI():
 
     def get_loans_expiring_soon(self):
         
-        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&gender=male'
+        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&sort_by=expiration'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
