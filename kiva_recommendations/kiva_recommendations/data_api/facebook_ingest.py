@@ -61,6 +61,7 @@ class FacebookIngest():
             if country:
                 countries.add(country)
 
-            self.logger.error(str(datetime.now()) + ":" + "countries_returned: " + str(list(countries)))
+
+        self.logger.error(str(datetime.now()) + ":" + "countries_returned: " + str(list(countries)))
 
         return list(countries)
