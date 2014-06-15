@@ -9,13 +9,17 @@ def loan_list(request):
 	result_type = request.POST.get('type')
 
 	kapi = api.KivaAPI()
-	loan_ids = kapi.get_loans(facebook_token, result_type)
-
 	result = []
-	for loan_id in loan_ids:
-		loan = kapi.get_loan_by_id(loan_id)
-		loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
-		result.append(loan)
+	try:
+		loan_ids = kapi.get_loans(facebook_token, result_type)
+
+		for loan_id in loan_ids:
+			loan = kapi.get_loan_by_id(loan_id)
+			loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
+			result.append(loan)
+	except:
+		result = 
+
 	return HttpResponse(json.dumps(result))
 
 @csrf_exempt

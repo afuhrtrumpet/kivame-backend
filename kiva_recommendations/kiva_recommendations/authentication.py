@@ -13,7 +13,7 @@ def kiva_request(request):
 	callback_url = 'oob'
 
 	connection = httplib.HTTPConnection("localhost:3000")
-	request_token_url = 'https://api.kivaws.org/oauth/request_token.json?oauth_callback='+urllib.quote_plus(callback_url)
+	request_token_url = 'https://api.kivaws.org/oauth/request_token.json?oauth_callback='+urllib.quote_plus(callback_url)+"&client_id="+consumer_key
 	consumer = oauth.Consumer(consumer_key, consumer_secret)
 	client = oauth.Client(consumer)
 
@@ -42,7 +42,7 @@ def kiva_access(request):
 
 	client = oauth.Client(consumer, token)
 
-	access_token_url = 'https://api.kivaws.org/oauth/access_token.json'
+	access_token_url = 'https://api.kivaws.org/oauth/access_token.json?client_id='+consumer_key
 
 	resp, content = client.request(access_token_url, "POST")
 
