@@ -33,7 +33,7 @@ def kiva_access(request):
 	oauth_token_secret = request.POST.get('oauth_token_secret')
 
 	consumer_key = settings.KIVA_CLIENT_ID
-	cosumer_secret = settings.KIVA_CLIENT_SECRET
+	consumer_secret = settings.KIVA_CLIENT_SECRET
 
 	consumer = oauth.Consumer(consumer_key, consumer_secret)
 
