@@ -17,5 +17,6 @@ urlpatterns = patterns('',
 		url(r'^auth/kiva_request/', 'kiva_recommendations.authentication.kiva_request', name='kiva'),
 		url(r'^auth/kiva_access/', 'kiva_recommendations.authentication.kiva_access', name='kiva'),
 
-		url(r'^loan_list', 'kiva_recommendations.data.loan_list', name='loan_list')
+		url(r'^loan_list', 'kiva_recommendations.data.loan_list', name='loan_list'),
+		url(r'^all_loans', 'kiva_recommendations.data.all_loans', name='all_loans')
 )
