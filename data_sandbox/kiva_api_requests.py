@@ -16,7 +16,7 @@ class KivaAPI():
 
         return response_dict['loans'][0]
 
-    def ids_from_loans(self, loans):
+    def get_ids_from_loans(self, loans):
          return [loan['id'] for loan in loans]
 
     def get_loans_by_country(self, country_code):
