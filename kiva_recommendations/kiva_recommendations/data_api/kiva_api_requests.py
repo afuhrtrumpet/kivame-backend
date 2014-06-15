@@ -51,7 +51,7 @@ class KivaAPI():
 
         #Pick up the necessary things
         loan['id'] = response_dict['loans'][0]['id']
-        loan['image'] = response_dict['loans'][0]['name']
+        loan['image'] = response_dict['loans'][0]['image']["id"]
         loan['borrower_name'] =  response_dict['loans'][0]['name']
         loan['country'] = response_dict['loans'][0]['location']['country']
         loan['country_code'] = response_dict['loans'][0]['location']['country_code']
