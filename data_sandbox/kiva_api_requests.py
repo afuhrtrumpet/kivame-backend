@@ -2,10 +2,27 @@
 """
 
 import requests
+import random
+import pycountry
 
 class KivaAPI():
     """ Methods to parse Kiva API 
     """
+
+    def find_country_code(self, country_name):
+    
+        # Custom name wrangling
+        if country_name == "USA": country_name = "United States"
+
+        #  Define country hash 
+        countries = {}
+        for country in pycountry.countries:
+            countries[country.name] = country.alpha2
+
+        country_id = countries.get(country_name, 'Unknown code')
+        
+        return country_id 
+
     def get_loan_by_id(self, id):
         """  Get a single loan based on id
         """
@@ -16,7 +33,7 @@ class KivaAPI():
 
         return response_dict['loans'][0]
 
-    def get_ids_from_loans(self, loans):
+    def get_ids_for_loans(self, loans):
          return [loan['id'] for loan in loans]
 
     def get_loans_by_country(self, country_code):
@@ -32,7 +49,6 @@ class KivaAPI():
             return loans
         else:
             print('Invalid country code') 
-
 
     def get_loans_sample(self):
         """  Get 1st page of loans
@@ -121,20 +137,27 @@ class KivaAPI():
 
 def main():
     
-    current_country = 'YE'
-    test = KivaAPI()
-    loans = test.get_loans_by_country(current_country)
-    # print("The lastest loan is from {0}.".format(current_loans[0]['location']['country']))
+    kapi = KivaAPI()
 
-    # lender_id = 'premal'
-    # # Change 'premal' to your own lender id to see the impact of the teams you belong to
-    # team_list = test.get_team_list(lender_id)
-    # for i in range(len(team_list)):
-    #     print 'Team id is %d' % team_list[i]['id']
-    #     lender_list = test.get_lender_in_team_list(team_list, i)
-    #     id_list = test.build_lender_id_list(lender_list)
-    #     team_impact = test.get_lender_invitee_sum(id_list)
-    #     print "Team %10s invited %d others" % (team_list[i]['name'], team_impact )
+    # Get country and country code
+    countries = list({u'Bangladesh', u'Pakistan', u'USA'}) # should be from facebook_ingest.py
+    country = random.choice(countries)
+    print("The current country is {0}.".format(country))
+    country_code = kapi.find_country_code(country)
+
+    # Get list of loan IDs for country
+    loans = kapi.get_loans_by_country(country_code)
+    
+    # Make sure there is enough loans
+    if len(loans) < 20:    
+        n_missing_loans = 20 - len(loans)
+        more_loans = kapi.get_loans_sample() 
+        filler_loans = more_loans[0:n_missing_loans]
+        #TODO: make sure we aren't showing the same loans twice
+        loans = loans+filler_loans
+
+    loan_ids = kapi.get_ids_for_loans(loans)
+    print("The current loan ids are {0}.".format(loan_ids))
 
 if __name__ == '__main__':
     main()

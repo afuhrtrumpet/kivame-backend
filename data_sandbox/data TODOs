@@ -1,7 +1,5 @@
-TODO: get 20 loans based on 'Urdu', u'Sindhi', u'Hindi', u'English'
-TODO: convert (and validate) any country to 2 string country code
-TODO: get api call for given lender id
+TODO: Connect the data pipes
 
 ## Ideas
-- suggest based on Kiva regioins
+- suggest based on Kiva regions
 - make suggestions based on last n visited country
