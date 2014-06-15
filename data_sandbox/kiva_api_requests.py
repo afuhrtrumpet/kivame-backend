@@ -2,10 +2,65 @@
 """
 
 import requests
+import random
+import pycountry
 
 class KivaAPI():
     """ Methods to parse Kiva API 
     """
+
+    def find_country_code(self, country_name):
+    
+        # Custom name wrangling
+        if country_name == "USA": country_name = "United States"
+
+        #  Define country hash 
+        countries = {}
+        for country in pycountry.countries:
+            countries[country.name] = country.alpha2
+
+        country_id = countries.get(country_name, 'Unknown code')
+        
+        return country_id 
+
+    def get_loan_by_id(self, id):
+        """  Get a single loan based on id
+        """
+        loan = {}
+        url = 'http://api.kivaws.org/v1/loans/search.json&id='+str(id)
+        response = requests.get(url)
+        if response.status_code != requests.codes.ok:
+            self.handle_error(response.status_code)
+
+        response_dict = response.json()
+
+        #print response_dict['loans'][0]
+        #Pick up the necessary things
+        loan['id'] = response_dict['loans'][0]['id']
+        loan['image'] = response_dict['loans'][0]['name']
+        loan['borrower_name'] =  response_dict['loans'][0]['name']
+        loan['country'] = response_dict['loans'][0]['location']['country']
+        loan['country_code'] = response_dict['loans'][0]['location']['country_code']
+        loan['use'] = response_dict['loans'][0]['use']
+
+        return loan
+
+    def get_ids_for_loans(self, loans):
+         return [loan['id'] for loan in loans]
+
+    def get_loans_by_country(self, country_code):
+        """  Get loans based on country
+        """
+        if len(country_code) == 2:
+            url = 'http://api.kivaws.org/v1/loans/search.json&country_code='+country_code
+            response = requests.get(url)
+            if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+            response_dict = response.json()
+            loans = response_dict['loans'] # 1st page only / 20 loans
+           
+            return loans
+        else:
+            print('Invalid country code') 
 
     def get_loans_sample(self):
         """  Get 1st page of loans
@@ -15,7 +70,7 @@ class KivaAPI():
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
         
-        return response_dict['loans']
+        return response_dict['loans'] # 1st page only / 20 loans
 
     def get_loans_all(self):
         """  Get all loans
@@ -25,8 +80,10 @@ class KivaAPI():
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
-        total_loans = response_dict['loans']
+        total_loans = response_dict['loans'] # 1st page only / 20 loans
 
+        # Go through each page of API call
+        # XXX: Good chance of timing out
         paging = response_dict['paging']
         page = 1
         n_paging = paging["pages"]
@@ -79,8 +136,6 @@ class KivaAPI():
         every_id = every_id[:-1] #remove the final comma
         return every_id
 
-
-
     def handle_error(self, status):
         if status == 'org.kiva.RateLimitExceeded':
             print('Status: ', response.status_code, 'You are blocked due to overuse. Retry in a few minutes. Exiting.')
@@ -93,23 +148,28 @@ class KivaAPI():
         exit()
 
 def main():
+
+    kapi = KivaAPI()
+
+    # Get country and country code
+    countries = list({u'Bangladesh', u'Pakistan', u'USA'}) # should be from facebook_ingest.py
+    country = random.choice(countries)
+    print("The current country is {0}.".format(country))
+    country_code = kapi.find_country_code(country)
+
+    # Get list of loan IDs for country
+    loans = kapi.get_loans_by_country(country_code)
     
-    current_country = 'foo'
-    n_loans = 10
+    # Make sure there is enough loans
+    if len(loans) < 20:    
+        n_missing_loans = 20 - len(loans)
+        more_loans = kapi.get_loans_sample() 
+        filler_loans = more_loans[0:n_missing_loans]
+        #TODO: make sure we aren't showing the same loans twice
+        loans = loans+filler_loans
 
-    test = KivaAPI()
-    current_loans = test.get_loans_sample()
-    print("The lastest loan is from {0}.".format(current_loans[0]['location']['country']))
-
-    # lender_id = 'premal'
-    # # Change 'premal' to your own lender id to see the impact of the teams you belong to
-    # team_list = test.get_team_list(lender_id)
-    # for i in range(len(team_list)):
-    #     print 'Team id is %d' % team_list[i]['id']
-    #     lender_list = test.get_lender_in_team_list(team_list, i)
-    #     id_list = test.build_lender_id_list(lender_list)
-    #     team_impact = test.get_lender_invitee_sum(id_list)
-    #     print "Team %10s invited %d others" % (team_list[i]['name'], team_impact )
+    loan_ids = kapi.get_ids_for_loans(loans)
+    print("The current loan ids are {0}.".format(loan_ids))
 
 if __name__ == '__main__':
     main()

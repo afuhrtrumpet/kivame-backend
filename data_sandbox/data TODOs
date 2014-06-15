@@ -1,6 +1,5 @@
-TODO: get all loans available from given country via direct API call
-TODO: convert (and validate) any country to 2 string country code
+TODO: Connect the data pipes
 
 ## Ideas
-- suggest based on Kiva regioins
+- suggest based on Kiva regions
 - make suggestions based on last n visited country
