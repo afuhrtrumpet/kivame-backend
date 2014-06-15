@@ -5,6 +5,8 @@ import requests
 import random
 import pycountry
 
+from data_ingest.facebook_ingest import FacebookIngest
+
 class KivaAPI():
     """ Methods to parse Kiva API 
     """
@@ -147,29 +149,41 @@ class KivaAPI():
             print('Status: ', status, 'Problem with the request. Exiting')
         exit()
 
+    def get_loans(self, facebook_access_token):
+        fi = FacebookIngest(facebook_access_token)
+        countries = fi.get_tagged_places()
+
+        # Get country and country code
+        countries = list(countries) # should be from facebook_ingest.py
+        country = random.choice(countries)
+
+        #print("The current country is {0}.".format(country))
+        country_code = self.find_country_code(country)
+
+        # Get list of loan IDs for country
+        loans = self.get_loans_by_country(country_code)
+
+        # Make sure there is enough loans
+        if len(loans) < 20:
+            n_missing_loans = 20 - len(loans)
+            more_loans = self.get_loans_sample()
+            filler_loans = more_loans[0:n_missing_loans]
+            #TODO: make sure we aren't showing the same loans twice
+            loans = loans+filler_loans
+
+        loan_ids = self.get_ids_for_loans(loans)
+        #print("The current loan ids are {0}.".format(loan_ids))
+
+        return loan_ids
+
 def main():
 
     kapi = KivaAPI()
+    loan_ids = kapi.get_loans("CAACEdEose0cBAB4cPZC8UFYxWkfFs9ODZCPbPoVfEcXfuVrbSJ1NL3gW9yHxL2lf7Mbb6xPrGB9XJgVdZAi1Tgn86gDeRb81rFesPmWFDQxWT6VqyrCBju8sI4i0mU5a3NZBJwBzWskePuuAeKwrWapBCV7MLIz7HFtUSDZCDQeArOZCZA1zvCmtauY4kdOdMyT4hWWhaZBU8gZDZD")
+    print loan_ids
 
-    # Get country and country code
-    countries = list({u'Bangladesh', u'Pakistan', u'USA'}) # should be from facebook_ingest.py
-    country = random.choice(countries)
-    print("The current country is {0}.".format(country))
-    country_code = kapi.find_country_code(country)
-
-    # Get list of loan IDs for country
-    loans = kapi.get_loans_by_country(country_code)
-    
-    # Make sure there is enough loans
-    if len(loans) < 20:    
-        n_missing_loans = 20 - len(loans)
-        more_loans = kapi.get_loans_sample() 
-        filler_loans = more_loans[0:n_missing_loans]
-        #TODO: make sure we aren't showing the same loans twice
-        loans = loans+filler_loans
-
-    loan_ids = kapi.get_ids_for_loans(loans)
-    print("The current loan ids are {0}.".format(loan_ids))
+    for loan_id in loan_ids:
+        print kapi.get_loan_by_id(loan_id)
 
 if __name__ == '__main__':
     main()

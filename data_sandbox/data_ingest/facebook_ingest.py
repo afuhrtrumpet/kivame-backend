@@ -32,7 +32,7 @@ class FacebookIngest():
         for l in resp['languages']:
             languages.add(l['name'])
 
-        return languages
+        return list(languages)
 
     def get_tagged_places(self):
         countries = set()
@@ -46,7 +46,8 @@ class FacebookIngest():
             country =  address_tokens[len(address_tokens) - 1]
             countries.add(country)
 
-        return countries
+
+        return list(countries)
 
 
 def main ():
