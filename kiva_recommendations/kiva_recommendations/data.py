@@ -3,9 +3,11 @@ import data_api.kiva_api_requests as api
 import json
 
 def loan_list(request):
-	#facebook_token = request.POST.get('token')
+	facebook_token = request.POST.get('token')
+	#if (!facebook_token):
+		#facebook_token = "CAACEdEose0cBAB4cPZC8UFYxWkfFs9ODZCPbPoVfEcXfuVrbSJ1NL3gW9yHxL2lf7Mbb6xPrGB9XJgVdZAi1Tgn86gDeRb81rFesPmWFDQxWT6VqyrCBju8sI4i0mU5a3NZBJwBzWskePuuAeKwrWapBCV7MLIz7HFtUSDZCDQeArOZCZA1zvCmtauY4kdOdMyT4hWWhaZBU8gZDZD"
 	kapi = api.KivaAPI()
-	loan_ids = kapi.get_loans("CAACEdEose0cBAB4cPZC8UFYxWkfFs9ODZCPbPoVfEcXfuVrbSJ1NL3gW9yHxL2lf7Mbb6xPrGB9XJgVdZAi1Tgn86gDeRb81rFesPmWFDQxWT6VqyrCBju8sI4i0mU5a3NZBJwBzWskePuuAeKwrWapBCV7MLIz7HFtUSDZCDQeArOZCZA1zvCmtauY4kdOdMyT4hWWhaZBU8gZDZD")
+	loan_ids = kapi.get_loans(facebook_token)
 
 	result = []
 	for loan_id in loan_ids:
