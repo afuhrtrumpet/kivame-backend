@@ -5,6 +5,7 @@ import urllib
 import json
 import oauth2 as oauth
 import httplib
+from django.views.decorators.csrf import csrf_exempt
 
 def kiva_request(request):
 	consumer_key = settings.KIVA_CLIENT_ID
@@ -25,6 +26,7 @@ def kiva_request(request):
 
 	return HttpResponse(content)
 
+@csrf_exempt
 def kiva_access(request):
 	verifier = request.POST.get('verifier')
 	oauth_token = request.POST.get('oauth_token')
