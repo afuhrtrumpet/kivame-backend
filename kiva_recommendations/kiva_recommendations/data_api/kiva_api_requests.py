@@ -22,6 +22,7 @@ class KivaAPI():
         handlr = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=10000, backupCount=1000)
         self.logger.addHandler(handlr)
 
+
     def find_country_code(self, country_name):
     
         # Custom name wrangling
@@ -72,6 +73,16 @@ class KivaAPI():
         loan['funded_percentage'] = (loan['funded_amount'] * 1.0 / loan['loan_amount']) * 100
         #Badges
 
+
+        #Get Partner Rating
+        url = 'http://api.kivaws.org/v1/partners/'+str(response_dict['loans'][0]['partner_id'])+'.json'
+        response = requests.get(url)
+
+        if response.status_code != requests.codes.ok:
+            self.handle_error(response.status_code)
+
+        response_dict_partner = response.json()
+        loan['partner_rating'] = response_dict_partner['partners'][0]['rating']
 
         return loan
 
