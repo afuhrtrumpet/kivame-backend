@@ -184,14 +184,18 @@ class KivaAPI():
 
     def pad_loans(self, loans):
 
-         # Make sure there is enough loans
-        if len(loans) < 20:
-            n_missing_loans = 20 - len(loans)
-            more_loans = self.get_loans_sample()
-            filler_loans = more_loans[0 : n_missing_loans]
+        try:
+             # Make sure there is enough loans
+            if len(loans) < 20:
+                n_missing_loans = 20 - len(loans)
+                more_loans = self.get_loans_sample()
+                filler_loans = more_loans[0 : n_missing_loans]
 
-            #TODO: make sure we aren't showing the same loans twice
-            loans = loans + filler_loans
+                #TODO: make sure we aren't showing the same loans twice
+                loans = loans + filler_loans
+        except:
+            self.logger.error(str(datetime.now()) + ":" + "pad_loans failure.")
+            raise
 
         return loans
 

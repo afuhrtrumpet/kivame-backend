@@ -9,17 +9,14 @@ class FacebookIngest():
 
     def __init__(self, oauth_access_token=None):
 
-        print oauth_access_token
 
         if oauth_access_token != None:
             self.graph = GraphAPI(oauth_access_token)
-            print self.graph
 
         else:
             raise Exception('No facebook access token provided.')
 
-        self.user_id = self.get_user_id()
-        self.geocoder = GoogleGeocoder()
+
 
     def get_user_id(self):
         resp = self.graph.get('/v2.0/me?fields=id')
