@@ -22,8 +22,6 @@ def kiva_request(request):
 	if resp['status'] != '200':
 		raise Exception("Invalid response. Status: "+resp['status']+" Message: "+content)
 
-	request_token = dict(json.loads(content))
-
 	return HttpResponse(content)
 
 @csrf_exempt
@@ -32,10 +30,17 @@ def kiva_access(request):
 	oauth_token = request.POST.get('oauth_token')
 	oauth_token_secret = request.POST.get('oauth_token_secret')
 
+	print(oauth_token)
+	print(oauth_token_secret)
+
 	consumer_key = settings.KIVA_CLIENT_ID
 	consumer_secret = settings.KIVA_CLIENT_SECRET
-
 	consumer = oauth.Consumer(consumer_key, consumer_secret)
+
+	token = oauth.Token(oauth_token, oauth_token_secret)
+	token.set_verifier(verifier)
+
+	client = oauth.Client(consumer, token)
 
 	access_token_url = 'https://api.kivaws.org/oauth/access_token.json'
 
