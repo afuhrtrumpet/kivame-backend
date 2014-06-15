@@ -1,5 +1,7 @@
 __author__ = 'rakesh'
 
+#Facebook Graph Explorer: https://developers.facebook.com/tools/explorer/145634995501895/?method=GET&path=me%3Ffields%3Did%2Cname&version=v2.0
+
 from googlegeocoder import GoogleGeocoder
 from facepy import GraphAPI
 about_me_token = "CAACEdEose0cBACNbgZCsTIk0pwIxHa2UGYhKyrXZAxYfnkiUu8h96LmH1DqELHokGz5OONDxZBgxDKfBb6VzjywwsbrjAhdSpFEgDC3rkZAhTxYQ0XPM5bWh8OqvQsCqBZBl3FEAoEZBbU9PGoqWVZCIhIVudflXBvDntDBPRd2seI6Vhap6ACwThRbxhezZA57qOwUAsyJGsAZDZD"
@@ -50,6 +52,21 @@ class FacebookIngest():
 
         return locations
 
+
+    def get_locations(self):
+        resp = self.graph.get('/v2.0/' + self.user_id + '/photos')
+        for photo in resp['data']:
+            x = photo['tags']['data'][0]['x']
+            y = photo['tags']['data'][0]['y']
+            print str(x) + ", " + str(y)
+            reverse = geocoder.get((x, y))
+            print reverse[0].formatted_address
+
+            print str(y) + ", " + str(x)
+            reverse = geocoder.get((y, x))
+            print reverse[0].formatted_address
+
+        return locations
 
 def main ():
     fi = FacebookIngest(about_me_token)
