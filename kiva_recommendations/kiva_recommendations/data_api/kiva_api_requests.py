@@ -57,6 +57,16 @@ class KivaAPI():
     def get_ids_for_loans(self, loans):
          return [loan['id'] for loan in loans]
 
+    def get_loans_expiring_soon(self):
+        
+        url = 'http://api.kivaws.org/v1/loans/search.json&sort_by=expiration'
+        response = requests.get(url)
+        if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        response_dict = response.json()
+        loans = response_dict['loans'] # 1st page only / 20 loans
+
+        return loans
+
     def get_loans_by_country(self, country_code):
         """  Get loans based on country
         """
