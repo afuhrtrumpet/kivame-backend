@@ -4,19 +4,22 @@ __author__ = 'rakesh'
 
 from googlegeocoder import GoogleGeocoder
 from facepy import GraphAPI
-about_me_token = "CAACEdEose0cBACNbgZCsTIk0pwIxHa2UGYhKyrXZAxYfnkiUu8h96LmH1DqELHokGz5OONDxZBgxDKfBb6VzjywwsbrjAhdSpFEgDC3rkZAhTxYQ0XPM5bWh8OqvQsCqBZBl3FEAoEZBbU9PGoqWVZCIhIVudflXBvDntDBPRd2seI6Vhap6ACwThRbxhezZA57qOwUAsyJGsAZDZD"
 
 class FacebookIngest():
 
     def __init__(self, oauth_access_token=None):
 
-        if oauth_access_token == None:
+        print oauth_access_token
 
-            self.graph = graph = GraphAPI(oauth_access_token)
-            self.user_id = self.get_user_id()
-            self.geocoder = GoogleGeocoder()
+        if oauth_access_token != None:
+            self.graph = GraphAPI(oauth_access_token)
+            print self.graph
+
         else:
             raise Exception('No facebook access token provided.')
+
+        self.user_id = self.get_user_id()
+        self.geocoder = GoogleGeocoder()
 
     def get_user_id(self):
         resp = self.graph.get('/v2.0/me?fields=id')
@@ -53,15 +56,3 @@ class FacebookIngest():
 
 
         return list(countries)
-
-
-def main ():
-    fi = FacebookIngest(about_me_token)
-
-    #print "User Id:", fi.user_id
-    #print "Location of Residence:", fi.get_location_of_residence()
-    #print "Languages:", fi.get_languages()
-    print "Tagged Places:", eval(fi.get_tagged_places())
-
-if __name__ == "__main__":
-    main()
