@@ -42,7 +42,7 @@ class KivaAPI():
         """  Get a single loan based on id
         """
         loan = {}
-        url = 'http://api.kivaws.org/v1/loans/'+str(id)+'.json'
+        url = 'http://api.kivaws.org/v1/loans/'+str(id)+'.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:
             self.handle_error(response.status_code)
@@ -76,7 +76,7 @@ class KivaAPI():
 
 
         #Get Partner Rating
-        url = 'http://api.kivaws.org/v1/partners/'+str(response_dict['loans'][0]['partner_id'])+'.json'
+        url = 'http://api.kivaws.org/v1/partners/'+str(response_dict['loans'][0]['partner_id'])+'.json&app_id=com.kivame'
         response = requests.get(url)
 
         if response.status_code != requests.codes.ok:
@@ -92,7 +92,7 @@ class KivaAPI():
 
     def get_loans_fathers_day(self):
         
-        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&gender=male&borrower_type=individuals'
+        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&gender=male&borrower_type=individuals&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -102,7 +102,7 @@ class KivaAPI():
 
     def get_loans_expiring_soon(self):
         
-        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&sort_by=expiration'
+        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&sort_by=expiration&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -116,7 +116,7 @@ class KivaAPI():
 
         loans = []
         if len(country_code) == 2:
-            url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&country_code='+country_code
+            url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&country_code='+country_code+'&app_id=com.kivame'
             response = requests.get(url)
             if response.status_code != requests.codes.ok:
                 self.handle_error(response.status_code)
@@ -131,7 +131,7 @@ class KivaAPI():
     def get_loans_sample(self):
         """  Get 1st page of loans
         """
-        url = 'http://api.kivaws.org/v1/loans/newest.json'
+        url = 'http://api.kivaws.org/v1/loans/newest.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -142,7 +142,7 @@ class KivaAPI():
         """  Get all loans
         """
 
-        url = 'http://api.kivaws.org/v1/loans/newest.json'
+        url = 'http://api.kivaws.org/v1/loans/newest.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -167,7 +167,7 @@ class KivaAPI():
     def get_team_list(self,lender_id):
         """ Return a list of teams a lender belongs to 
         """
-        url = 'https://api.kivaws.org/v1/lenders/'+lender_id+'/teams.json'
+        url = 'https://api.kivaws.org/v1/lenders/'+lender_id+'/teams.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
 
@@ -178,7 +178,7 @@ class KivaAPI():
     def get_lender_in_team_list(self, team_list, team_id):
         """ Return the list of lenders in a team 
         """
-        url = 'https://api.kivaws.org/v1/teams/'+str(team_list[team_id]['id'])+'/lenders.json'
+        url = 'https://api.kivaws.org/v1/teams/'+str(team_list[team_id]['id'])+'/lenders.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
 
