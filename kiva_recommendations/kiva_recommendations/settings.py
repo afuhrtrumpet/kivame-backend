@@ -154,3 +154,7 @@ LOGGING = {
         },
     }
 }
+
+#API Keys
+KIVA_CLIENT_ID = "com.kivame"
+KIVA_CLIENT_SECRET = "yxDkAExgCiBsqrlpCq7GDpIMuIMGBDAp"
