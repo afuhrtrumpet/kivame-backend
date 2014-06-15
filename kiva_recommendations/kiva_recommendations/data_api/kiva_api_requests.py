@@ -26,7 +26,8 @@ class KivaAPI():
     def find_country_code(self, country_name):
     
         # Custom name wrangling
-        if country_name == "USA": country_name = "United States"
+        if country_name == "USA" or country_name == "US":
+            country_name = "United States"
 
         #  Define country hash 
         countries = {}
@@ -112,16 +113,20 @@ class KivaAPI():
     def get_loans_by_country(self, country_code):
         """  Get loans based on country
         """
+
+        loans = []
         if len(country_code) == 2:
             url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&country_code='+country_code
             response = requests.get(url)
-            if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+            if response.status_code != requests.codes.ok:
+                self.handle_error(response.status_code)
+
             response_dict = response.json()
             loans = response_dict['loans'] # 1st page only / 20 loans
-           
-            return loans
         else:
-            print('Invalid country code') 
+            print('Invalid country code')
+
+        return loans
 
     def get_loans_sample(self):
         """  Get 1st page of loans
@@ -276,7 +281,7 @@ class KivaAPI():
 def main():
 
     kapi = KivaAPI()
-    loan_ids = kapi.get_loans("CAACEdEose0cBACJn0tG9I2btjNBKgK1Kr9GZBojAg5ZAIdw9nfFXZBwFUnHhe38NT8WHZCVUqq2XLQBNvj0hZAHHF7x3zeeZAVixiPp1oSZCpd3BWjDFg9GUleA1wHFQWpGHGhTDTtYT4j9IJ3zzadRjHtMlcC1EXpKN7Wx6iW55wEYmnkis0FwfXoN4Hl6YvqOnzyWQ2qskgZDZD",
+    loan_ids = kapi.get_loans("CAACEdEose0cBAHPbzgjLduEmnOiEXwdvDesCHfb7GTHv5hQtLY9CKHiIqIzhvjdEZCXQ4i2qhdZAEemIJVmH3VUZAajOYnylBGcSQAyxPUmTZAS8L3eNRsSZCLwLBKlHU7N1Il96c4lcZBMaIVZAssIrRb21vd28kqoaSZAitG91N0JHdMtAH1llxvXLZCgyGXJN4pXGpDZCtgBAZDZD",
                               type = "geography")
 
     for loan_id in loan_ids:

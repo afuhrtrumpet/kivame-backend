@@ -1,51 +1,33 @@
-<<<<<<< HEAD
-2014-06-15 10:26:12.249964:FacebookIngest failure - falling back.
-2014-06-15 10:26:12.250169:No JSON object could be decoded
-2014-06-15 10:26:58.962187:FacebookIngest failure - falling back.
-2014-06-15 10:26:58.962360:No JSON object could be decoded
-2014-06-15 10:27:07.564291:FacebookIngest failure - falling back.
-2014-06-15 10:27:07.564447:No JSON object could be decoded
-2014-06-15 10:28:24.978848:FacebookIngest failure - falling back.
-2014-06-15 10:28:24.979031:addinfourl instance has no attribute 'feed'
-2014-06-15 10:29:08.697549:FacebookIngest failure - falling back.
-2014-06-15 10:29:08.697717:'str' object has no attribute 'read'
-2014-06-15 10:32:37.048276:FacebookIngest failure - falling back.
-2014-06-15 10:32:37.048482:'str' object has no attribute 'read'
-2014-06-15 10:37:36.143552:FacebookIngest failure - falling back.
-2014-06-15 10:37:36.143710:Error reverse geo-coding the location
-2014-06-15 10:44:46.311822:FacebookIngest failure - falling back.
-2014-06-15 10:44:46.311998:Nominatim and Google Reverse Coding failed
-2014-06-15 10:45:22.830152:FacebookIngest failure - falling back.
-2014-06-15 10:45:22.830317:list index out of range
-2014-06-15 10:46:34.286951:FacebookIngest failure - falling back.
-2014-06-15 10:46:34.287151:list index out of range
-2014-06-15 10:52:50.845222:FacebookIngest failure - falling back.
-2014-06-15 10:52:50.845361:Google Reverse Coding failed
-2014-06-15 11:00:42.515837:FacebookIngest failure - falling back.
-2014-06-15 11:00:42.515980:[190] Error validating access token: Session has expired on Jun 15, 2014 11:00am. The current time is Jun 15, 2014 11:00am.
-2014-06-15 11:01:11.789569:FacebookIngest failure - falling back.
-2014-06-15 11:01:11.789727:[190] Error validating access token: Session has expired on Jun 15, 2014 11:00am. The current time is Jun 15, 2014 11:01am.
-2014-06-15 11:37:15.967461:FacebookIngest failure - falling back.
-2014-06-15 11:37:15.967607:[190] Error validating access token: Session has expired on Jun 15, 2014 11:00am. The current time is Jun 15, 2014 11:37am.
-2014-06-15 11:37:44.433098:FacebookIngest failure - falling back.
-2014-06-15 11:37:44.433294:[190] Error validating access token: Session has expired on Jun 15, 2014 11:00am. The current time is Jun 15, 2014 11:37am.
-2014-06-15 11:39:29.921722:FacebookIngest failure - falling back.
-2014-06-15 11:39:29.921870:[190] Error validating access token: Session has expired on Jun 15, 2014 11:00am. The current time is Jun 15, 2014 11:39am.
-2014-06-15 11:40:16.083756:FacebookIngest failure - falling back.
-2014-06-15 11:40:16.084019:Google Reverse Coding failed
-2014-06-15 11:40:50.694208:FacebookIngest failure - falling back.
-2014-06-15 11:40:50.694411:Google Reverse Coding failed
-=======
-2014-06-15 09:57:50.782355:FacebookIngest failure - falling back.
-2014-06-15 09:57:50.783219:Error reverse geo-coding the location
-2014-06-15 09:59:03.766381:FacebookIngest failure - falling back.
-2014-06-15 09:59:03.766381:FacebookIngest failure - falling back.
-2014-06-15 09:59:03.785734:Error reverse geo-coding the location
-2014-06-15 09:59:03.785734:Error reverse geo-coding the location
-2014-06-15 10:12:30.290514:FacebookIngest failure - falling back.
-2014-06-15 10:12:30.290514:FacebookIngest failure - falling back.
-2014-06-15 10:12:30.290514:FacebookIngest failure - falling back.
-2014-06-15 10:12:30.323734:Error reverse geo-coding the location
-2014-06-15 10:12:30.323734:Error reverse geo-coding the location
-2014-06-15 10:12:30.323734:Error reverse geo-coding the location
->>>>>>> 6cbb1e8e44a029c8c320b26c5bd62ea082f88ec7
+2014-06-15 12:25:29.005058:FacebookIngest failure - falling back.
+2014-06-15 12:25:29.005294:Factual and Google Reverse Coding failed
+2014-06-15 12:27:46.226646:FacebookIngest failure - falling back.
+2014-06-15 12:27:46.226813:Factual and Google Reverse Coding failed
+2014-06-15 12:28:24.808274:FacebookIngest failure - falling back.
+2014-06-15 12:28:24.808445:Factual and Google Reverse Coding failed
+2014-06-15 12:31:12.970590:FacebookIngest failure - falling back.
+2014-06-15 12:31:12.970839:list index out of range
+2014-06-15 12:31:55.698242:FacebookIngest failure - falling back.
+2014-06-15 12:31:55.698415:Factual and Google Reverse Coding failed
+2014-06-15 13:00:09.170250:FacebookIngest failure - falling back.
+2014-06-15 13:00:09.170396:[190] Error validating access token: Session has expired on Jun 15, 2014 1:00pm. The current time is Jun 15, 2014 1:00pm.
+2014-06-15 13:00:34.607647:FacebookIngest failure - falling back.
+2014-06-15 13:00:34.607787:[190] Error validating access token: Session has expired on Jun 15, 2014 1:00pm. The current time is Jun 15, 2014 1:00pm.
+2014-06-15 13:07:35.395344:FacebookIngest failure - falling back.
+2014-06-15 13:07:35.395489:[190] Error validating access token: Session has expired on Jun 15, 2014 1:00pm. The current time is Jun 15, 2014 1:07pm.
+2014-06-15 13:09:02.663746:FacebookIngest failure - falling back.
+2014-06-15 13:09:02.663914:Factual and Google Reverse Coding failed
+2014-06-15 13:09:03.849284:pad_loans failure.
+2014-06-15 13:09:10.470523:FacebookIngest failure - falling back.
+2014-06-15 13:09:10.470689:Factual and Google Reverse Coding failed
+2014-06-15 13:11:23.145692:FacebookIngest failure - falling back.
+2014-06-15 13:11:23.145856:Factual and Google Reverse Coding failed
+2014-06-15 13:11:45.480549:FacebookIngest failure - falling back.
+2014-06-15 13:11:45.480793:Factual and Google Reverse Coding failed
+2014-06-15 13:15:52.661476:FacebookIngest failure - falling back.
+2014-06-15 13:15:52.661656:Factual and Google Reverse Coding failed
+2014-06-15 13:22:54.360767:FacebookIngest failure - falling back.
+2014-06-15 13:22:54.360961:Factual and Google Reverse Coding failed
+2014-06-15 13:23:33.972431:FacebookIngest failure - falling back.
+2014-06-15 13:23:33.972573:Factual and Google Reverse Coding failed
+2014-06-15 13:26:40.118304:pad_loans failure.
+2014-06-15 13:27:45.046052:pad_loans failure.
