@@ -5,7 +5,7 @@ import requests
 import random
 import pycountry
 
-from data_ingest.facebook_ingest import FacebookIngest
+from facebook_ingest import FacebookIngest
 
 class KivaAPI():
     """ Methods to parse Kiva API 
