@@ -261,7 +261,7 @@ class KivaAPI():
 def main():
 
     kapi = KivaAPI()
-    loan_ids = kapi.get_loans("CAACEdEose0cBAHL1F9DwO42NnbeesRZCcr0WRZBfFVjcRTIqoQHDqldUnolxFkh1r8hXMQBjS2nBEjDxylSpAIJ1esWmC20eU1CoDZCPZCcPvRRJCxnv2VwciiY0ulB7sRd8bV1DghXLeWh5Xl5fVWF185KOtW0IYtWNNZCRaelZA6t5o9DRJJFxObsoYAlgqfPVCilMGosQZDZD",
+    loan_ids = kapi.get_loans("CAACEdEose0cBACJn0tG9I2btjNBKgK1Kr9GZBojAg5ZAIdw9nfFXZBwFUnHhe38NT8WHZCVUqq2XLQBNvj0hZAHHF7x3zeeZAVixiPp1oSZCpd3BWjDFg9GUleA1wHFQWpGHGhTDTtYT4j9IJ3zzadRjHtMlcC1EXpKN7Wx6iW55wEYmnkis0FwfXoN4Hl6YvqOnzyWQ2qskgZDZD",
                               type = "geography")
 
     for loan_id in loan_ids:

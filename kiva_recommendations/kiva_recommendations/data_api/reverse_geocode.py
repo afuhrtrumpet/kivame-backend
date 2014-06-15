@@ -11,6 +11,7 @@ import urllib2
 import urllib
 import urllib2
 import json
+import time
 
 
 class NominatimReverseGeocoder(object):
@@ -55,10 +56,22 @@ class ReverseGeoCode():
         country = None
         reverse = None
 
-        try:
-            reverse = self.geocoder.get((latitude, longitude))
-        except:
+        attempts = 0
+        success = False
+
+        while success != True and attempts < 3:
+            try:
+                attempts += 1
+                reverse = self.geocoder.get((latitude, longitude))
+            except:
+                time.sleep(1)
+                continue
+
+            success = True
+
+        if success == False:
             raise Exception('Error reverse geo-coding the location via Google')
+
 
         try:
             address = reverse[0].formatted_address
