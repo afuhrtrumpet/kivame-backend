@@ -2,21 +2,24 @@ __author__ = 'rakesh'
 
 #Facebook Graph Explorer: https://developers.facebook.com/tools/explorer/145634995501895/?method=GET&path=me%3Ffields%3Did%2Cname&version=v2.0
 
-from googlegeocoder import GoogleGeocoder
 from facepy import GraphAPI
+from reverse_geocode import ReverseGeoCode
 
 class FacebookIngest():
 
     def __init__(self, oauth_access_token=None):
 
-
         if oauth_access_token != None:
-            self.graph = GraphAPI(oauth_access_token)
+            try:
+                self.graph = GraphAPI(oauth_access_token)
+            except:
+                raise Exception('Could not instantiate Facebook GraphAPI with provided access token')
 
         else:
             raise Exception('No facebook access token provided.')
 
-
+        self.user_id = self.get_user_id()
+        self.reverse_geocoder = ReverseGeoCode()
 
     def get_user_id(self):
         resp = self.graph.get('/v2.0/me?fields=id')
@@ -39,17 +42,20 @@ class FacebookIngest():
 
         return list(languages)
 
+
     def get_tagged_places(self):
         countries = set()
 
-        resp = self.graph.get('/v2.0/' + self.user_id + '/tagged_places')
+        try:
+            resp = self.graph.get('/v2.0/' + self.user_id + '/tagged_places')
+        except:
+            raise Exception('Error getting tagged_places from Facebook')
 
         for place_dict in resp["data"]:
-            reverse = self.geocoder.get((place_dict["place"]["location"]["latitude"], place_dict["place"]["location"]["longitude"]))
-            address = reverse[0].formatted_address
-            address_tokens = address.split()
-            country =  address_tokens[len(address_tokens) - 1]
-            countries.add(country)
+            country = self.reverse_geocoder.reverse_geocode_country(place_dict["place"]["location"]["latitude"],
+                                                                    place_dict["place"]["location"]["longitude"])
 
+            if country:
+                countries.add(country)
 
         return list(countries)
