@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 import data_api.kiva_api_requests as api
 import json
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def loan_list(request):
 	facebook_token = request.POST.get('token')
 	#if (!facebook_token):

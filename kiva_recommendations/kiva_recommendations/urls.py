@@ -1,11 +1,9 @@
 from django.conf.urls import patterns, include, url
-from django.views.decorators.csrf import csrf_exempt
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
-@csrf_exempt
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'kiva_recommendations.views.home', name='home'),
