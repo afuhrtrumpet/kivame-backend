@@ -56,9 +56,9 @@ class KivaAPI():
 
         #images and image id
         loan['image_id'] = response_dict['loans'][0]['image']["id"]
-        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+loan['image_id']+'.jpg'
-        loan['medium_image_url'] = 'http://www.kiva.org/img/w350/'+loan['image_id']+'.jpg'
-        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+loan['image_id']+'.jpg'
+        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+  str(loan['image_id']) + '.jpg'
+        loan['medium_image_url'] = 'http://www.kiva.org/img/w350/'+ str(loan['image_id']) + '.jpg'
+        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+  str(loan['image_id']) + '.jpg'
 
         loan['borrower_name'] =  response_dict['loans'][0]['name']
         loan['country'] = response_dict['loans'][0]['location']['country']
