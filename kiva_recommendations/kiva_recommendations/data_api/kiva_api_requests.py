@@ -36,7 +36,8 @@ class KivaAPI():
 
         response_dict = response.json()
 
-        print response_dict['loans'][0]
+        #print response_dict['loans'][0]
+
         #Pick up the necessary things
         loan['id'] = response_dict['loans'][0]['id']
         loan['image'] = response_dict['loans'][0]['name']
@@ -44,18 +45,26 @@ class KivaAPI():
         loan['country'] = response_dict['loans'][0]['location']['country']
         loan['country_code'] = response_dict['loans'][0]['location']['country_code']
         loan['use'] = response_dict['loans'][0]['use']
-
-        #Small description
-        #Long description
+        loan['loan_amount'] = response_dict['loans'][0]['loan_amount']
+        loan['funded_amount'] = response_dict['loans'][0]['funded_amount']
+        loan['funded_percentage'] = (loan['funded_amount'] * 1.0 / loan['loan_amount']) * 100
         #Badges
-        #Loan percentage fullfilled
-        #Total Ask
 
 
         return loan
 
     def get_ids_for_loans(self, loans):
          return [loan['id'] for loan in loans]
+
+    def get_loans_expiring_soon(self):
+        
+        url = 'http://api.kivaws.org/v1/loans/search.json&sort_by=expiration'
+        response = requests.get(url)
+        if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        response_dict = response.json()
+        loans = response_dict['loans'] # 1st page only / 20 loans
+
+        return loans
 
     def get_loans_by_country(self, country_code):
         """  Get loans based on country
@@ -187,7 +196,6 @@ def main():
 
     kapi = KivaAPI()
     loan_ids = kapi.get_loans("CAACEdEose0cBAB4cPZC8UFYxWkfFs9ODZCPbPoVfEcXfuVrbSJ1NL3gW9yHxL2lf7Mbb6xPrGB9XJgVdZAi1Tgn86gDeRb81rFesPmWFDQxWT6VqyrCBju8sI4i0mU5a3NZBJwBzWskePuuAeKwrWapBCV7MLIz7HFtUSDZCDQeArOZCZA1zvCmtauY4kdOdMyT4hWWhaZBU8gZDZD")
-    print loan_ids
 
     for loan_id in loan_ids:
         print kapi.get_loan_by_id(loan_id)
