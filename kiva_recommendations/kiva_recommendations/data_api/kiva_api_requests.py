@@ -22,6 +22,7 @@ class KivaAPI():
         handlr = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=10000, backupCount=1000)
         self.logger.addHandler(handlr)
 
+
     def find_country_code(self, country_name):
     
         # Custom name wrangling
@@ -73,10 +74,30 @@ class KivaAPI():
         #Badges
 
 
+        #Get Partner Rating
+        url = 'http://api.kivaws.org/v1/partners/'+str(response_dict['loans'][0]['partner_id'])+'.json'
+        response = requests.get(url)
+
+        if response.status_code != requests.codes.ok:
+            self.handle_error(response.status_code)
+
+        response_dict_partner = response.json()
+        loan['partner_rating'] = response_dict_partner['partners'][0]['rating']
+
         return loan
 
     def get_ids_for_loans(self, loans):
          return [loan['id'] for loan in loans]
+
+    def get_loans_fathers_day(self):
+        
+        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&gender=male&borrower_type=individuals'
+        response = requests.get(url)
+        if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        response_dict = response.json()
+        loans = response_dict['loans'] # 1st page only / 20 loans
+
+        return loans
 
     def get_loans_expiring_soon(self):
         
@@ -240,6 +261,11 @@ class KivaAPI():
             loan_ids = self.get_ids_for_loans(loans)
             random.shuffle(loan_ids)
 
+        elif type == "fathers_day":
+            loans = self.get_loans_fathers_day()
+            loans = self.pad_loans(loans)
+            loan_ids = self.get_ids_for_loans(loans)
+            random.shuffle(loan_ids)
         else:
             loans = self.pad_loans(loans)
             loan_ids = self.get_ids_for_loans(loans)
@@ -250,7 +276,7 @@ class KivaAPI():
 def main():
 
     kapi = KivaAPI()
-    loan_ids = kapi.get_loans("CAACEdEose0cBAHL1F9DwO42NnbeesRZCcr0WRZBfFVjcRTIqoQHDqldUnolxFkh1r8hXMQBjS2nBEjDxylSpAIJ1esWmC20eU1CoDZCPZCcPvRRJCxnv2VwciiY0ulB7sRd8bV1DghXLeWh5Xl5fVWF185KOtW0IYtWNNZCRaelZA6t5o9DRJJFxObsoYAlgqfPVCilMGosQZDZD",
+    loan_ids = kapi.get_loans("CAACEdEose0cBACJn0tG9I2btjNBKgK1Kr9GZBojAg5ZAIdw9nfFXZBwFUnHhe38NT8WHZCVUqq2XLQBNvj0hZAHHF7x3zeeZAVixiPp1oSZCpd3BWjDFg9GUleA1wHFQWpGHGhTDTtYT4j9IJ3zzadRjHtMlcC1EXpKN7Wx6iW55wEYmnkis0FwfXoN4Hl6YvqOnzyWQ2qskgZDZD",
                               type = "geography")
 
     for loan_id in loan_ids:
