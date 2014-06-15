@@ -15,3 +15,17 @@ def loan_list(request):
 	for loan_id in loan_ids:
 		result.append(kapi.get_loan_by_id(loan_id))
 	return HttpResponse(json.dumps(result))
+
+@csrf_exempt
+def all_loans(request):
+	facebook_token = request.POST.get('token')
+	types = ['geography', 'expiring']
+	result = {}
+	kapi = api.KivaAPI()
+	for result_type in types:
+		result[result_type] = []
+		loan_ids = kapi.get_loans(facebook_token, result_type)
+		
+		for loan_id in loan_ids:
+			result[result_type].append(kapi.get_loan_by_id(loan_id))
+	return HttpResponse(json.dumps(result))
