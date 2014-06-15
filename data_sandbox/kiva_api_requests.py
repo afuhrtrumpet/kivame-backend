@@ -29,7 +29,7 @@ class KivaAPI():
         """  Get a single loan based on id
         """
         loan = {}
-        url = 'http://api.kivaws.org/v1/loans/search.json&id='+str(id)
+        url = 'http://api.kivaws.org/v1/loans/'+str(id)+'.json'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:
             self.handle_error(response.status_code)

@@ -14,4 +14,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+		url(r'^auth/kiva_request/', 'kiva_recommendations.authentication.kiva_request', name='kiva'),
+		url(r'^auth/kiva_access/', 'kiva_recommendations.authentication.kiva_access', name='kiva')
 )
