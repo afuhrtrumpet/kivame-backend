@@ -10,15 +10,12 @@ def loan_list(request):
 
 	kapi = api.KivaAPI()
 	result = []
-	try:
-		loan_ids = kapi.get_loans(facebook_token, result_type)
+	loan_ids = kapi.get_loans(facebook_token, result_type)
 
-		for loan_id in loan_ids:
-			loan = kapi.get_loan_by_id(loan_id)
-			loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
-			result.append(loan)
-	except:
-		result = 
+	for loan_id in loan_ids:
+		loan = kapi.get_loan_by_id(loan_id)
+		loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
+		result.append(loan)
 
 	return HttpResponse(json.dumps(result))
 
