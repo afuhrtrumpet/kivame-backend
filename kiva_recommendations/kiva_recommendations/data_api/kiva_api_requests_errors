@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2014-06-15 10:26:12.249964:FacebookIngest failure - falling back.
 2014-06-15 10:26:12.250169:No JSON object could be decoded
 2014-06-15 10:26:58.962187:FacebookIngest failure - falling back.
@@ -34,3 +35,17 @@
 2014-06-15 11:40:16.084019:Google Reverse Coding failed
 2014-06-15 11:40:50.694208:FacebookIngest failure - falling back.
 2014-06-15 11:40:50.694411:Google Reverse Coding failed
+=======
+2014-06-15 09:57:50.782355:FacebookIngest failure - falling back.
+2014-06-15 09:57:50.783219:Error reverse geo-coding the location
+2014-06-15 09:59:03.766381:FacebookIngest failure - falling back.
+2014-06-15 09:59:03.766381:FacebookIngest failure - falling back.
+2014-06-15 09:59:03.785734:Error reverse geo-coding the location
+2014-06-15 09:59:03.785734:Error reverse geo-coding the location
+2014-06-15 10:12:30.290514:FacebookIngest failure - falling back.
+2014-06-15 10:12:30.290514:FacebookIngest failure - falling back.
+2014-06-15 10:12:30.290514:FacebookIngest failure - falling back.
+2014-06-15 10:12:30.323734:Error reverse geo-coding the location
+2014-06-15 10:12:30.323734:Error reverse geo-coding the location
+2014-06-15 10:12:30.323734:Error reverse geo-coding the location
+>>>>>>> 6cbb1e8e44a029c8c320b26c5bd62ea082f88ec7

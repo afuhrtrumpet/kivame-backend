@@ -89,6 +89,16 @@ class KivaAPI():
     def get_ids_for_loans(self, loans):
          return [loan['id'] for loan in loans]
 
+    def get_loans_fathers_day(self):
+        
+        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&gender=male&borrower_type=individuals'
+        response = requests.get(url)
+        if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+        response_dict = response.json()
+        loans = response_dict['loans'] # 1st page only / 20 loans
+
+        return loans
+
     def get_loans_expiring_soon(self):
         
         url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&sort_by=expiration'
@@ -251,6 +261,11 @@ class KivaAPI():
             loan_ids = self.get_ids_for_loans(loans)
             random.shuffle(loan_ids)
 
+        elif type == "fathers_day":
+            loans = self.get_loans_fathers_day()
+            loans = self.pad_loans(loans)
+            loan_ids = self.get_ids_for_loans(loans)
+            random.shuffle(loan_ids)
         else:
             loans = self.pad_loans(loans)
             loan_ids = self.get_ids_for_loans(loans)
