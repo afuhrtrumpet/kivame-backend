@@ -12,8 +12,6 @@ import urllib2
 import json
 import time
 
-from factual import Factual
-
 
 class ReverseGeoCode():
 
