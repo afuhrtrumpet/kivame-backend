@@ -4,3 +4,8 @@
 2
 3
 4
+Incoming facebook_access_token:CAACEdEose0cBABsCTZB2gXeTLnmZBXnx74pxC2XlMYEdF14EPXZC23fETFrZAtAmRGGio8MZAlZBJgBDZCZCI4Asss7cSnErOLQUNVlwx8n6c4ljcopQcl9EcaRCQf1OBT5VxzaiA8tFMceGIGh90PIVWnIr79hLbPDE6cT5vV1XUmS57N9hiGcsV7GyZAQZB2AohQ0guuZBEwRXAZDZD
+2014-06-16 19:07:20.510946:FacebookIngest failure - falling back.
+5
+2014-06-16 19:07:20.511174:[190] Error validating access token: Session has expired on Jun 15, 2014 4:00pm. The current time is Jun 16, 2014 7:07pm.
+2014-06-16 19:07:21.801972:pad_loans failure.

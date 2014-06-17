@@ -238,32 +238,23 @@ class KivaAPI():
         if type == "geography":
 
             try:
-                self.logger.error("0")
+                self.logger.error("Incoming facebook_access_token:" + str(facebook_access_token))
 
                 fi = FacebookIngest(self.logger, facebook_access_token)
-
-                self.logger.error("0.5")
-
                 countries = fi.get_tagged_places()
-
-                self.logger.error("1")
 
                 # Get country and country code
                 countries = list(countries) # should be from facebook_ingest.py
                 country = random.choice(countries)
 
-                self.logger.error("2")
-
 
                 #print("The current country is {0}.".format(country))
                 country_code = self.find_country_code(country)
 
-                self.logger.error("3")
 
                 # Get list of loan IDs for country
                 loans = self.get_loans_by_country(country_code)
 
-                self.logger.error("4")
 
             except Exception, e:
                 self.logger.error(str(datetime.now()) + ":" + "FacebookIngest failure - falling back.")
