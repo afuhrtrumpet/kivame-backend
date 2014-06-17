@@ -4,10 +4,15 @@ __author__ = 'rakesh'
 
 from facepy import GraphAPI
 from reverse_geocode import ReverseGeoCode
+from datetime import datetime
+
+import logging
+import logging.handlers
+
 
 class FacebookIngest():
 
-    def __init__(self, oauth_access_token=None):
+    def __init__(self, logger_instance, oauth_access_token=None):
 
         if oauth_access_token != None:
             try:
@@ -20,6 +25,7 @@ class FacebookIngest():
 
         self.user_id = self.get_user_id()
         self.reverse_geocoder = ReverseGeoCode()
+        self.logger = logger_instance
 
     def get_user_id(self):
         resp = self.graph.get('/v2.0/me?fields=id')
@@ -29,9 +35,6 @@ class FacebookIngest():
         profile = self.graph.get('/v2.0/me?fields=location')
         return profile['location']['name']
 
-    def get_last_location_visited(self):
-        profile = self.graph.get('/v2.0/me?fields=location')
-        print profile['location']['name']
 
     def get_languages(self):
         languages = set()
@@ -53,9 +56,28 @@ class FacebookIngest():
 
         for place_dict in resp["data"]:
             country = self.reverse_geocoder.reverse_geocode_country(place_dict["place"]["location"]["latitude"],
-                                                                    place_dict["place"]["location"]["longitude"])
+                                                                   place_dict["place"]["location"]["longitude"])
 
             if country:
                 countries.add(country)
 
+
+        self.logger.error(str(datetime.now()) + ":" + "countries_returned: " + str(list(countries)))
+
         return list(countries)
+
+
+
+def main():
+
+    logger = logging.getLogger('FacebookTesting')
+    logger.setLevel(logging.DEBUG)
+    handlr = logging.handlers.RotatingFileHandler('facebook_ingest_testing', maxBytes=10000, backupCount=1000)
+    logger.addHandler(handlr)
+
+    fi = FacebookIngest(logger, "CAACEdEose0cBANPBOhe0rogJPsTQclDJ907eOpHcYlCbvYotP6z9qn93pW2BL22h0GLZBumdQMdO0O1k2090b1YQRyJC23iouUO8GXjeqt90v9XsyxHGpyEJ88GzBEVY8I9nyHr3ADioqVaJPN3hWwkzl3waV1nvdS5j7XTjhmUtf3AbNtty4hBUMhEYvpzZCUDRE1dgZDZD")
+    countries = fi.get_tagged_places()
+
+
+if __name__ == '__main__':
+    main()

@@ -26,7 +26,8 @@ class KivaAPI():
     def find_country_code(self, country_name):
     
         # Custom name wrangling
-        if country_name == "USA": country_name = "United States"
+        if country_name == "USA" or country_name == "US":
+            country_name = "United States"
 
         #  Define country hash 
         countries = {}
@@ -41,7 +42,7 @@ class KivaAPI():
         """  Get a single loan based on id
         """
         loan = {}
-        url = 'http://api.kivaws.org/v1/loans/'+str(id)+'.json'
+        url = 'http://api.kivaws.org/v1/loans/'+str(id)+'.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:
             self.handle_error(response.status_code)
@@ -55,8 +56,9 @@ class KivaAPI():
 
         #images and image id
         loan['image_id'] = response_dict['loans'][0]['image']["id"]
-        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+str(id)+'.jpg'
-        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+str(id)+'.jpg'
+        loan['short_image_url'] = 'http://www.kiva.org/img/w250/'+  str(loan['image_id']) + '.jpg'
+        loan['medium_image_url'] = 'http://www.kiva.org/img/w350/'+ str(loan['image_id']) + '.jpg'
+        loan['large_image_url'] = 'http://www.kiva.org/img/w800/'+  str(loan['image_id']) + '.jpg'
 
         loan['borrower_name'] =  response_dict['loans'][0]['name']
         loan['country'] = response_dict['loans'][0]['location']['country']
@@ -75,7 +77,7 @@ class KivaAPI():
 
 
         #Get Partner Rating
-        url = 'http://api.kivaws.org/v1/partners/'+str(response_dict['loans'][0]['partner_id'])+'.json'
+        url = 'http://api.kivaws.org/v1/partners/'+str(response_dict['loans'][0]['partner_id'])+'.json&app_id=com.kivame'
         response = requests.get(url)
 
         if response.status_code != requests.codes.ok:
@@ -91,7 +93,7 @@ class KivaAPI():
 
     def get_loans_fathers_day(self):
         
-        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&gender=male&borrower_type=individuals'
+        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&gender=male&borrower_type=individuals&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -101,7 +103,7 @@ class KivaAPI():
 
     def get_loans_expiring_soon(self):
         
-        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&sort_by=expiration'
+        url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&sort_by=expiration&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -112,21 +114,25 @@ class KivaAPI():
     def get_loans_by_country(self, country_code):
         """  Get loans based on country
         """
+
+        loans = []
         if len(country_code) == 2:
-            url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&country_code='+country_code
+            url = 'http://api.kivaws.org/v1/loans/search.json&status=fundraising&country_code='+country_code+'&app_id=com.kivame'
             response = requests.get(url)
-            if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
+            if response.status_code != requests.codes.ok:
+                self.handle_error(response.status_code)
+
             response_dict = response.json()
             loans = response_dict['loans'] # 1st page only / 20 loans
-           
-            return loans
         else:
-            print('Invalid country code') 
+            print('Invalid country code')
+
+        return loans
 
     def get_loans_sample(self):
         """  Get 1st page of loans
         """
-        url = 'http://api.kivaws.org/v1/loans/newest.json'
+        url = 'http://api.kivaws.org/v1/loans/newest.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -137,7 +143,7 @@ class KivaAPI():
         """  Get all loans
         """
 
-        url = 'http://api.kivaws.org/v1/loans/newest.json'
+        url = 'http://api.kivaws.org/v1/loans/newest.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
         response_dict = response.json()
@@ -162,7 +168,7 @@ class KivaAPI():
     def get_team_list(self,lender_id):
         """ Return a list of teams a lender belongs to 
         """
-        url = 'https://api.kivaws.org/v1/lenders/'+lender_id+'/teams.json'
+        url = 'https://api.kivaws.org/v1/lenders/'+lender_id+'/teams.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
 
@@ -173,7 +179,7 @@ class KivaAPI():
     def get_lender_in_team_list(self, team_list, team_id):
         """ Return the list of lenders in a team 
         """
-        url = 'https://api.kivaws.org/v1/teams/'+str(team_list[team_id]['id'])+'/lenders.json'
+        url = 'https://api.kivaws.org/v1/teams/'+str(team_list[team_id]['id'])+'/lenders.json&app_id=com.kivame'
         response = requests.get(url)
         if response.status_code != requests.codes.ok:  self.handle_error(response.status_code)
 
@@ -232,7 +238,9 @@ class KivaAPI():
         if type == "geography":
 
             try:
-                fi = FacebookIngest(facebook_access_token)
+                self.logger.error("Incoming facebook_access_token:" + str(facebook_access_token))
+
+                fi = FacebookIngest(self.logger, facebook_access_token)
                 countries = fi.get_tagged_places()
 
                 # Get country and country code
@@ -244,6 +252,7 @@ class KivaAPI():
 
                 # Get list of loan IDs for country
                 loans = self.get_loans_by_country(country_code)
+
 
             except Exception, e:
                 self.logger.error(str(datetime.now()) + ":" + "FacebookIngest failure - falling back.")

@@ -5,36 +5,50 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def loan_list(request):
-	facebook_token = request.POST.get('token')
-	result_type = request.POST.get('type')
+	facebook_token = ""
+	result_type = ""
+	try:
+		request_data= json.loads(request.body)
+		facebook_token = request_data['token']
+		result_type = request_data['type']
+	except ValueError:
+		facebook_token = request.POST.get('token')
+		result_type = request.POST.get('type')
 
 	kapi = api.KivaAPI()
 	result = []
-	try:
-		loan_ids = kapi.get_loans(facebook_token, result_type)
+	loan_ids = kapi.get_loans(facebook_token, result_type)
 
-		for loan_id in loan_ids:
-			loan = kapi.get_loan_by_id(loan_id)
-			loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
-			result.append(loan)
-	except:
-		result = 
+	for loan_id in loan_ids:
+		loan = kapi.get_loan_by_id(loan_id)
+		loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
+		result.append(loan)
 
 	return HttpResponse(json.dumps(result))
 
 @csrf_exempt
 def all_loans(request):
-	facebook_token = request.POST.get('token')
+	facebook_token = ""
+	try:
+		request_data = json.loads(request.body)
+		facebook_token = request_data['token']
+	except ValueError:
+		facebook_token = request.POST.get('token')
+	print(facebook_token)
 	types = ['geography', 'expiring']
-	result = {}
+	result = []
 	kapi = api.KivaAPI()
 	for result_type in types:
-		result[result_type] = []
+		type_object = {}
+		type_object["name"] = [result_type]
 		loan_ids = kapi.get_loans(facebook_token, result_type)
+
+		type_object["loans"] = []
 		
 		for loan_id in loan_ids:
 			loan = kapi.get_loan_by_id(loan_id)
 			loan["flag_url"] = "http://www.geonames.org/flags/x/" + loan["country_code"].lower() + ".gif"
 
-			result[result_type].append(loan)
+			type_object["loans"].append(loan)
+		result.append(type_object)
 	return HttpResponse(json.dumps(result))
