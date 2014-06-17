@@ -56,7 +56,6 @@ def main():
 
     rgc = ReverseGeoCode()
     country = rgc.reverse_geocode_country(30, 70)
-    print country
 
 if __name__ == '__main__':
     main()

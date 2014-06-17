@@ -247,10 +247,8 @@ class KivaAPI():
                 countries = list(countries) # should be from facebook_ingest.py
                 country = random.choice(countries)
 
-
                 #print("The current country is {0}.".format(country))
                 country_code = self.find_country_code(country)
-
 
                 # Get list of loan IDs for country
                 loans = self.get_loans_by_country(country_code)
@@ -258,7 +256,6 @@ class KivaAPI():
 
             except Exception, e:
                 self.logger.error(str(datetime.now()) + ":" + "FacebookIngest failure - falling back.")
-                self.logger.error("5")
                 self.logger.error(str(datetime.now()) + ":" + str(e))
 
             loans = self.pad_loans(loans)
@@ -288,7 +285,7 @@ class KivaAPI():
 def main():
 
     kapi = KivaAPI()
-    loan_ids = kapi.get_loans("CAACEdEose0cBABsCTZB2gXeTLnmZBXnx74pxC2XlMYEdF14EPXZC23fETFrZAtAmRGGio8MZAlZBJgBDZCZCI4Asss7cSnErOLQUNVlwx8n6c4ljcopQcl9EcaRCQf1OBT5VxzaiA8tFMceGIGh90PIVWnIr79hLbPDE6cT5vV1XUmS57N9hiGcsV7GyZAQZB2AohQ0guuZBEwRXAZDZD",
+    loan_ids = kapi.get_loans("CAACEdEose0cBANPBOhe0rogJPsTQclDJ907eOpHcYlCbvYotP6z9qn93pW2BL22h0GLZBumdQMdO0O1k2090b1YQRyJC23iouUO8GXjeqt90v9XsyxHGpyEJ88GzBEVY8I9nyHr3ADioqVaJPN3hWwkzl3waV1nvdS5j7XTjhmUtf3AbNtty4hBUMhEYvpzZCUDRE1dgZDZD",
                               type = "geography")
 
     for loan_id in loan_ids:

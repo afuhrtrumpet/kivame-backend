@@ -35,9 +35,6 @@ class FacebookIngest():
         profile = self.graph.get('/v2.0/me?fields=location')
         return profile['location']['name']
 
-    def get_last_location_visited(self):
-        profile = self.graph.get('/v2.0/me?fields=location')
-        print profile['location']['name']
 
     def get_languages(self):
         languages = set()
@@ -80,7 +77,6 @@ def main():
 
     fi = FacebookIngest(logger, "CAACEdEose0cBANPBOhe0rogJPsTQclDJ907eOpHcYlCbvYotP6z9qn93pW2BL22h0GLZBumdQMdO0O1k2090b1YQRyJC23iouUO8GXjeqt90v9XsyxHGpyEJ88GzBEVY8I9nyHr3ADioqVaJPN3hWwkzl3waV1nvdS5j7XTjhmUtf3AbNtty4hBUMhEYvpzZCUDRE1dgZDZD")
     countries = fi.get_tagged_places()
-    print countries
 
 
 if __name__ == '__main__':
