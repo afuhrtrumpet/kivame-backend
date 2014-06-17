@@ -276,7 +276,7 @@ class KivaAPI():
 def main():
 
     kapi = KivaAPI()
-    loan_ids = kapi.get_loans("CAACEdEose0cBACJn0tG9I2btjNBKgK1Kr9GZBojAg5ZAIdw9nfFXZBwFUnHhe38NT8WHZCVUqq2XLQBNvj0hZAHHF7x3zeeZAVixiPp1oSZCpd3BWjDFg9GUleA1wHFQWpGHGhTDTtYT4j9IJ3zzadRjHtMlcC1EXpKN7Wx6iW55wEYmnkis0FwfXoN4Hl6YvqOnzyWQ2qskgZDZD",
+    loan_ids = kapi.get_loans("PUT FACEBOOK TOKEN HERE",
                               type = "geography")
 
     for loan_id in loan_ids:
