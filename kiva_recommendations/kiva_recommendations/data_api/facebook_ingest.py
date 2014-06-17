@@ -68,16 +68,3 @@ class FacebookIngest():
 
 
 
-def main():
-
-    logger = logging.getLogger('FacebookTesting')
-    logger.setLevel(logging.DEBUG)
-    handlr = logging.handlers.RotatingFileHandler('facebook_ingest_testing', maxBytes=10000, backupCount=1000)
-    logger.addHandler(handlr)
-
-    fi = FacebookIngest(logger, "CAACEdEose0cBANPBOhe0rogJPsTQclDJ907eOpHcYlCbvYotP6z9qn93pW2BL22h0GLZBumdQMdO0O1k2090b1YQRyJC23iouUO8GXjeqt90v9XsyxHGpyEJ88GzBEVY8I9nyHr3ADioqVaJPN3hWwkzl3waV1nvdS5j7XTjhmUtf3AbNtty4hBUMhEYvpzZCUDRE1dgZDZD")
-    countries = fi.get_tagged_places()
-
-
-if __name__ == '__main__':
-    main()
