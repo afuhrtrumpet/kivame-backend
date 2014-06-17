@@ -282,14 +282,3 @@ class KivaAPI():
 
         return loan_ids
 
-def main():
-
-    kapi = KivaAPI()
-    loan_ids = kapi.get_loans("PUT FACEBOOK TOKEN HERE",
-                              type = "geography")
-
-    for loan_id in loan_ids:
-        print kapi.get_loan_by_id(loan_id)
-
-if __name__ == '__main__':
-    main()
