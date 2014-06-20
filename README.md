@@ -1,7 +1,7 @@
-hacksummit
+HackSummit 2014 - Kiva Challenge
 ==========
 
-Created at Hack Summit 2014, this project provides the backend for a Kiva loan recommendation system.
+The backend for a KivaMe, a personalized loan recommendation system created at Hack Summit 2014.
 
 How to run
 ==========
